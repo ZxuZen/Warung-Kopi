@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Warung Kopi Moro Seneng</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,300;0,400;0,700;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Feather Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- AlpineJS -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+
+    <!-- App -->
+    <script src="src/app.js" async></script>
+
+    <!-- Midtrans -->
+    <script
+      type="text/javascript"
+      src="https://app.sandbox.midtrans.com/snap/snap.js"
+      data-client-key="SB-Mid-client-Hp0RUGqKksUBE0mT"
+    ></script>
+
+    <!-- My Style -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <!--  Navbar start -->
+    <nav class="navbar" x-data>
+      <a href="#" class="navbar-logo">WarKop<span> Moro Seneng</span></a>
+
+      <div class="navbar-nav">
+        <a href="#home">Home</a>
+        <a href="#about">Tentang Kami</a>
+        <a href="#menu">Produk</a>
+        <a href="#products">Menu</a>
+        <a href="#contact">Kontak</a>
+      </div>
+
+      <div class="navbar-extra">
+        <a href="#" id="shopping-cart-button"
+          ><i data-feather="shopping-cart"></i>
+          <span
+            class="quantity-badge"
+            x-show="$store.cart.quantity"
+            x-text="$store.cart.quantity"
+          ></span>
+        </a>
+        <a href="#" id="hamburger-menu"><i data-feather="menu"></i></a>
+      </div>
+
+      <!-- Shopping Cart Start -->
+      <div class="shopping-cart">
+        <template x-for="(item, index) in $store.cart.items" x-key="index">
+          <div class="cart-item">
+            <img :src="`img/Products/${item.img}`" :alt="item.name" />
+            <div class="item-detail">
+              <h3 x-text="item.name"></h3>
+              <div class="item-price">
+                <span x-text="rupiah(item.price)"></span> &times;
+                <button id="remove" @click="$store.cart.remove(item.id)">
+                  &minus;
+                </button>
+                <span x-text="item.quantity"></span>
+                <button id="add" @click="$store.cart.add(item)">&plus;</button>
+                &equals;
+                <span x-text="rupiah(item.total)"></span>
+              </div>
+            </div>
+          </div>
+        </template>
+        <h4 x-show="!$store.cart.items.length" style="margin-top: 1rem">
+          Keranjang Kosong
+        </h4>
+        <h4 x-show="$store.cart.items.length">
+          Total : <span x-text="rupiah($store.cart.total)"></span>
+        </h4>
+        <div class="form-container" x-show="$store.cart.items.length">
+          <form action="" id="checkoutForm">
+            <input
+              type="hidden"
+              name="items"
+              x-model="JSON.stringify($store.cart.items)"
+            />
+            <input type="hidden" name="total" x-model="$store.cart.total" />
+            <h5>Customer Detail</h5>
+
+            <label for="name">
+              <span>Nama</span>
+              <input type="text" name="name" id="name" />
+            </label>
+
+            <label for="email">
+              <span>Email</span>
+              <input type="text" name="email" id="email" />
+            </label>
+
+            <label for="phone">
+              <span>No. HP</span>
+              <input type="number" name="phone" id="phone" autocomplete="off" />
+            </label>
+
+            <label for="alamat">
+              <span>Alamat</span>
+              <input type="text" name="alamat" id="alamat" />
+            </label>
+
+            <label for="ket">
+              <span>Keterangan</span>
+              <input type="text" name="ket" id="ket" />
+            </label>
+
+            <button
+              class="checkout-button disabled"
+              type="submit"
+              id="checkout-button"
+              value="checkout"
+            >
+              Checkout
+            </button>
+          </form>
+        </div>
+      </div>
+      <!-- Shopping Cart End -->
+    </nav>
+    <!--  Navbar end -->
+
+    <!-- Hero Section Start -->
+    <section class="hero" id="home">
+      <main class="content">
+        <h1>Mulai Harimu dengan Secangkir <span>Kopi</span></h1>
+        <p>
+          Bingung nyari tempat nugas di Surabaya yang enak dan bisa makan dengan
+          harga terjangkau? Tenang, ada Warung Kopi Moro Seneng. Yuk gaskan!
+        </p>
+        <a href="#products" class="cta">Beli Sekarang</a>
+      </main>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- About Section Start -->
+    <section id="about" class="about">
+      <h2><span>Tentang</span> Kami</h2>
+
+      <div class="row">
+        <!-- Gambar Slider Start -->
+        <div class="slider">
+          <div class="slides">
+            <!-- radio btn Start -->
+            <input type="radio" name="radio-btn" id="radio1" />
+            <input type="radio" name="radio-btn" id="radio2" />
+            <input type="radio" name="radio-btn" id="radio3" />
+            <input type="radio" name="radio-btn" id="radio4" />
+            <input type="radio" name="radio-btn" id="radio5" />
+            <input type="radio" name="radio-btn" id="radio6" />
+            <!-- radio btn End -->
+
+            <!-- Slide gambar start -->
+            <div class="slide first">
+              <img src="img/tentang/morse2.png" alt="" />
+            </div>
+            <div class="slide">
+              <img src="img/tentang/morse3.jpg" alt="" />
+            </div>
+            <div class="slide">
+              <img src="img/tentang/morse4.jpg" alt="" />
+            </div>
+            <div class="slide">
+              <img src="img/tentang/morse5.jpg" alt="" />
+            </div>
+            <div class="slide">
+              <img src="img/tentang/morse6.jpg" alt="" />
+            </div>
+            <div class="slide">
+              <img src="img/tentang/tentang-kami.jpg" alt="" />
+            </div>
+            <!-- Slide gambar End -->
+
+            <!-- Navigasi gambar otomatis Start -->
+            <div class="navigation-auto">
+              <div class="auto-btn1"></div>
+              <div class="auto-btn2"></div>
+              <div class="auto-btn3"></div>
+              <div class="auto-btn4"></div>
+              <div class="auto-btn5"></div>
+              <div class="auto-btn6"></div>
+            </div>
+            <!-- Navigasi gambar otomatis End -->
+          </div>
+          <!-- Navigasi gambar manual Start -->
+          <div class="navigation-manual">
+            <label for="radio1" class="manual-btn"></label>
+            <label for="radio2" class="manual-btn"></label>
+            <label for="radio3" class="manual-btn"></label>
+            <label for="radio4" class="manual-btn"></label>
+            <label for="radio5" class="manual-btn"></label>
+            <label for="radio6" class="manual-btn"></label>
+          </div>
+          <!-- Navigasi gambar manual End -->
+        </div>
+        <!-- Gambar Slider end -->
+
+        <script type="text/javascript">
+          var counter = 1;
+          setInterval(function () {
+            document.getElementById("radio" + counter).checked = true;
+            counter++;
+            if (counter > 6) {
+              counter = 1;
+            }
+          }, 3750);
+        </script>
+
+        <div class="content">
+          <h3>Story About Us!</h3>
+          <p>
+            Warung Kopi Moro Seneng merupakan sebuah usaha UMKM yang bergerak di
+            bidang penyediaan minuman kopi dan makanan ringan.Yang berdiri pada
+            bulan Oktober 2023 Oleh Mas Aldo selaku pemilik warung kopi moro
+            seneng. Terletak tidak jauh dengan kampus UNESA Ketintang.
+          </p>
+          <p>
+            Kelebihan di warung kopi ini selain strategis juga harga yang
+            ditawarkan cukup terjangkau sehingga pas untuk kantong mahasiswa.
+            Moro Seneng tidak hanya menyediakan berbagai varian kopi, tetapi
+            juga menyajikan menu makanan ringan yang lezat untuk menemani
+            minuman pelanggan.
+          </p>
+          <p>
+            Moro Seneng juga dikenal dengan atmosfernya yang hangat dan ramah.
+            Desain interior yang santai dan dekorasi yang unik menciptakan
+            lingkungan yang cocok untuk berbagai jenis pertemuan, baik itu untuk
+            mengerjakan tugas, diskusi santai, atau sekadar bersantai untuk
+            mengisi waktu luang.
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- About Section End -->
+
+    <!--  Menu Section Start -->
+    <section id="menu" class="menu">
+      <h2><span>Produk Unggulan</span> Kami</h2>
+      <p>a cup is anough to give you energy all day long</p>
+
+      <div class="row">
+        <div class="menu-card">
+          <img src="img/Menu/kopihitam.jpg" alt="KoHi" class="menu-card-img" />
+          <h3 class="menu-card-title">- Kopi Hitam -</h3>
+          <p class="menu-card-price">IDR 5K</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/Menu/1.jpg" alt="KoSu" class="menu-card-img" />
+          <h3 class="menu-card-title">- Kopi Susu -</h3>
+          <p class="menu-card-price">IDR 6K</p>
+        </div>
+        <div class="menu-card">
+          <img
+            src="img/Menu/good day.jpg"
+            alt="GoodDay"
+            class="menu-card-img"
+          />
+          <h3 class="menu-card-title">- Good Day -</h3>
+          <p class="menu-card-price">IDR 7K</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/Menu/teh .jpg" alt="Teh" class="menu-card-img" />
+          <h3 class="menu-card-title">- Teh -</h3>
+          <p class="menu-card-price">IDR 5K</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/Menu/pop ice.jpg" alt="PopIce" class="menu-card-img" />
+          <h3 class="menu-card-title">- Pop Ice -</h3>
+          <p class="menu-card-price">IDR 6K</p>
+        </div>
+        <div class="menu-card">
+          <img
+            src="img/Menu/nutrisari.png"
+            alt="nutrisari"
+            class="menu-card-img"
+          />
+          <h3 class="menu-card-title">- Nutrisari -</h3>
+          <p class="menu-card-price">IDR 6K</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/Menu/sosis.jpg" alt="sosis" class="menu-card-img" />
+          <h3 class="menu-card-title">- Sosis -</h3>
+          <p class="menu-card-price">IDR 8K</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/Menu/indomie.jpg" alt="indomie" class="menu-card-img" />
+          <h3 class="menu-card-title">- Indomie -</h3>
+          <p class="menu-card-price">IDR 6K</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/Menu/kentang.jpg" alt="kentang" class="menu-card-img" />
+          <h3 class="menu-card-title">- Kentang Goreng -</h3>
+          <p class="menu-card-price">IDR 8K</p>
+        </div>
+        <div class="menu-card">
+          <img src="img/Menu/tempura.jpg" alt="tempura" class="menu-card-img" />
+          <h3 class="menu-card-title">- Tempura -</h3>
+          <p class="menu-card-price">IDR 8K</p>
+        </div>
+      </div>
+    </section>
+    <!--  Menu Section End -->
+
+    <!--  Product Section Start -->
+    <section class="products" id="products" x-data="products">
+      <h2><span>Menu</span> Kami</h2>
+      <p>
+        Menu spesial yang dirancang khusus untuk Anda yang menghargai kelezatan
+      </p>
+
+      <div class="row">
+        <template x-for="(item, index) in items" x-key="index">
+          <div class="product-card">
+            <div class="product-icons">
+              <a href="#" @click.prevent="$store.cart.add(item)">
+                <svg
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/feather-sprite.svg#shopping-cart" />
+                </svg>
+              </a>
+              <a href="#" class="item-detail-button">
+                <svg
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/feather-sprite.svg#eye" />
+                </svg>
+              </a>
+            </div>
+            <div class="product-image">
+              <img :src="`img/products/${item.img}`" :alt="item.name" />
+            </div>
+            <div class="product-content">
+              <h3 x-text="item.name"></h3>
+              <div class="product-stars">
+                <svg
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/feather-sprite.svg#star" />
+                </svg>
+                <svg
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/feather-sprite.svg#star" />
+                </svg>
+                <svg
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/feather-sprite.svg#star" />
+                </svg>
+                <svg
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/feather-sprite.svg#star" />
+                </svg>
+                <svg
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <use href="img/feather-sprite.svg#star" />
+                </svg>
+              </div>
+              <div class="product-price">
+                <span x-text="rupiah(item.price)"></span>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </section>
+    <!--  Product Section End -->
+
+    <!--  Kontak Section Start -->
+    <section id="contact" class="contact">
+      <h2><span>Kontak</span> Kami</h2>
+      <p>Kami Menerima Kritik dan Saran Anda</p>
+      <p>
+        Silahkan Menghubungi Owner Warung Kopi Moro Seneng melalui nomor
+        berikut: +62895808813176 Atau dapat mengirimkan kritik maupun saran pada
+        kotak saran di bawah ini:
+      </p>
+
+      <div class="row">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d247.3376102374585!2d112.72189107741184!3d-7.308680821299395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fb006c6006cd%3A0x46547757e21338b9!2sWarkop%20Moro%20seneng!5e0!3m2!1sid!2sid!4v1709314407843!5m2!1sid!2sid"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          class="map"
+        ></iframe>
+
+        <form
+          action="https://formsubmit.co/firebase2023oc@gmail.com"
+          method="POST"
+        >
+          <div class="input-group">
+            <i data-feather="user"></i>
+            <input type="text" name="nama" required placeholder="Nama" />
+          </div>
+          <div class="input-group">
+            <i data-feather="mail"></i>
+            <input type="text" name="email" required placeholder="E-Mail" />
+          </div>
+          <div class="input-group">
+            <i data-feather="message-circle"></i>
+            <input
+              type="text"
+              name="pesan"
+              required
+              placeholder="Kritik dan Saran"
+            />
+          </div>
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="box" />
+          <button type="submit" class="btn">Kirim Pesan</button>
+        </form>
+      </div>
+    </section>
+    <!--  Kontak Section End -->
+    <!--  https://formsubmit.co/ -->
+
+    <!--  Footer Start -->
+    <footer>
+      <div class="socials">
+        <a
+          href="https://www.instagram.com/warkopmorse?igsh=MTNwM2p5bjQ0Z3VkYg=="
+          ><i data-feather="instagram"></i
+        ></a>
+      </div>
+
+      <div class="links">
+        <a href="#home">Home</a>
+        <a href="#about">Tentang Kami</a>
+        <a href="#menu">Produk</a>
+        <a href="#products">Menu</a>
+        <a href="#contact">Kontak</a>
+      </div>
+
+      <div class="credit">
+        <p>Created by <a href="">Kelompok</a>. | &copy; 2024</p>
+      </div>
+    </footer>
+    <!--  Footer End -->
+
+    <!-- Modal Box Item Detail Start -->
+    <div class="modal" id="item-detail-modal">
+      <div class="modal-container">
+        <a href="#" class="close-icon"><i data-feather="x"></i></a>
+        <div class="modal-content">
+          <img src="img/Products/1.jpg" alt="Product 1" />
+          <div class="product-content">
+            <h3>Product 1</h3>
+            <p>
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Hic
+              maxime minus natus, iusto eos provident quibusdam quod, est
+              distinctio quis aut recusandae saepe voluptas quaerat.
+            </p>
+            <div class="product-stars">
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star" class="star-full"></i>
+              <i data-feather="star"></i>
+            </div>
+            <div class="product-price">IDR 50Jt <span>IDR 5K</span></div>
+            <a href="#"
+              ><i data-feather="shopping-cart"></i> <span>add to cart</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Box Item End -->
+
+    <!-- Feather icons -->
+    <script>
+      feather.replace();
+    </script>
+
+    <!-- My JavaScript -->
+    <script src="js/script.js"></script>
+  </body>
+</html>
