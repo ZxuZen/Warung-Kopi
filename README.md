@@ -1,3 +1,5 @@
+![poster pemweb](https://github.com/ZxuZen/Warung-Kopi/assets/130580189/ad3cc3bf-6a9c-407d-bd80-f73af660c4f8)
+
 # Website Warung Kopi
 
 
